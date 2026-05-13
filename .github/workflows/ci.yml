@@ -77,3 +77,14 @@ jobs:
            -Dsonar.projectKey=${PROJECT_KEY_SONAR} \
            -Dsonar.organization=${ORGANIZATION_SONAR} \
            -Dsonar.login=${SONAR_TOKEN}
+
+      - name: Build Docker image
+        run: docker build -t valefsg/rentcar-back:latest
+
+      - name: Login to Docker Hub 
+        uses: docker/login-actio@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push Docker image
+        run: docker push valefsg/rentcar-back:latest
